@@ -11,21 +11,24 @@ import Cart from './pages/cart/Cart';
 import NoPage from './pages/nopage/NoPage';
 import Dashboard from './pages/admin/Dashboard';
 import Order from "./pages/order/Order";
+import MyState from "./context/data/myState";
 
 
 const App = () => {
   return (
-    <Router>
+    <MyState>
+      <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/allproducts" element={<Allproducts />} /> */}
           <Route path="/order" element={<Order />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path="/*" element={<NoPage />} />
 
         </Routes>
       </Router>
+    </MyState>
   )
 }
 
