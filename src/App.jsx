@@ -12,6 +12,8 @@ import NoPage from './pages/nopage/NoPage';
 import Dashboard from './pages/admin/Dashboard';
 import Order from "./pages/order/Order";
 import MyState from "./context/data/myState";
+import Login from "./pages/registration/Login";
+import Signup from "./pages/registration/Signup";
 
 
 const App = () => {
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/order" element={<Order />} />
           <Route path="/cart" element={<Cart />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
           <Route path="/*" element={<NoPage />} />
 
         </Routes>
