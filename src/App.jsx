@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate,
   // Navigate,
 } from "react-router-dom";
 
@@ -27,20 +28,60 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/allproducts" element={<Allproducts />} /> */}
-          <Route path="/order" element={<Order />} />
+          <Route path="/order" element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          } />
           <Route path="/cart" element={<Cart />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<Signup/>}/>
+          <Route path='/dashboard' element={
+            <ProtectedRouteForAdmin>
+              <Dashboard />
+            </ProtectedRouteForAdmin>
+          } />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/*" element={<NoPage />} />
-          <Route path="/productinfo/:id" element={<ProductInfo/>}/>
-          <Route path='/addproduct' element={<AddProduct/>}/>
-          <Route path='/updateproduct' element={<UpdateProduct/>}/>
+          <Route path="/productinfo/:id" element={<ProductInfo />} />
+          <Route path='/addproduct' element={
+            <ProtectedRouteForAdmin>
+              <AddProduct />
+            </ProtectedRouteForAdmin>} />
+          <Route path='/updateproduct' element={
+            <ProtectedRouteForAdmin>
+              <UpdateProduct />
+            </ProtectedRouteForAdmin>} />
         </Routes>
-        <ToastContainer/>
+        <ToastContainer />
       </Router>
     </MyState>
   )
 }
 
 export default App
+
+
+// user 
+
+export const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem('user')
+  if (user) {
+    return children
+  } else {
+    return <Navigate to={'/login'} />
+  }
+}
+
+// admin 
+
+const ProtectedRouteForAdmin = ({ children }) => {
+  const admin = JSON.parse(localStorage.getItem('user'))
+
+  if (admin.user.email === 'duttaamit356@gmail.com') {
+    return children
+  }
+  else {
+    return <Navigate to={'/login'} />
+  }
+
+}
