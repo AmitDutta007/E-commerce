@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MyContext from './myContext'
 import { fireDB } from '../../firebase/FirebaseConfig';
-import { Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import {  Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 const myState = (props) => {
@@ -52,7 +52,7 @@ const myState = (props) => {
         try {
             await addDoc(productRef, products)
             toast.success("Product Add successfully")
-            // getProductData()
+            getProductData()
             // closeModal()
             setLoading(false)
         } catch (error) {
@@ -64,10 +64,40 @@ const myState = (props) => {
 
     const [product, setProduct] = useState([]);
 
+
+    // ****** get product
+  const getProductData = async () => {
+    setLoading(true)
+    try {
+      const q = query(
+        collection(fireDB, "products"),
+        orderBy("time"),
+        // limit(5)
+      );
+      const data = onSnapshot(q, (QuerySnapshot) => {
+        let productsArray = [];
+        QuerySnapshot.forEach((doc) => {
+          productsArray.push({ ...doc.data(), id: doc.id });
+        });
+        setProduct(productsArray)
+        setLoading(false);
+      });
+      return () => data;
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getProductData();
+  }, []);
+
+
     return (
         <MyContext.Provider value={{
             mode, toggleMode, loading, setLoading,
-            products, setProducts, addProduct
+            products, setProducts, addProduct, product
         }}>
             {props.children}
         </MyContext.Provider>
