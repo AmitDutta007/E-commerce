@@ -91,8 +91,6 @@ const myState = (props) => {
     } catch (error) {
       console.log(error)
       setLoading(false)
-    } finally {
-      setProducts(' ')
     }
   }
 
@@ -118,10 +116,8 @@ const myState = (props) => {
     } catch (error) {
       setLoading(false)
       console.log(error)
-    } finally {
-      setProducts(' ')
     }
-
+    setProducts("")
   }
 
   const deleteProduct = async (item) => {
