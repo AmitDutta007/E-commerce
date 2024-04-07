@@ -1,7 +1,13 @@
+import Filter from "../../components/filter/Filter"
+import Layout from "../../components/layout/Layout"
+import ProductCard from "../../components/productCard/ProductCard"
 
 const AllProducts = () => {
   return (
-    <div>AllProducts</div>
+    <Layout>
+      <Filter />
+      <ProductCard/>
+    </Layout>
   )
 }
 

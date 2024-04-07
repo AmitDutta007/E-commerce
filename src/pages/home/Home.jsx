@@ -34,10 +34,9 @@ const Home = () => {
       {/* <button className=' bg-gray-300 p-5' onClick={()=> addCart()}>add</button>
         <button className=' bg-gray-300 p-5' onClick={()=> deleteCart()}>del</button> */}
       <HeroSection />
-      <Filter />
       <ProductCard />
-      <Track />
-      <Testimonial />
+      {/* <Track />
+      <Testimonial /> */}
     </Layout>
   )
 }
